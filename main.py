@@ -22,11 +22,11 @@ from dotenv import load_dotenv
 load_dotenv()
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
-MY_EMAIL = os.environ['EMAIL']
-PASSWORD = os.environ['PASSWORD']
+MY_EMAIL = os.environ.get('EMAIL')
+PASSWORD = os.environ.get('PASSWORD')
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ['SECRET']
+app.config['SECRET_KEY'] = os.environ.get('SECRET')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -40,7 +40,7 @@ gravatar = Gravatar(app,
                     base_url=None)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
