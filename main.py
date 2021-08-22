@@ -16,10 +16,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import smtplib
 import requests
+from dateutil.tz import tzlocal
+
 import re
 import os
 
-tz_IND = pytz.timezone('Asia/Kolkata')
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -223,7 +224,7 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"{date.today(tz_IND).strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now(tz_IND).strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
+                              date_time=f"{date.today(tzlocal()).strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now(tzlocal()).strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
