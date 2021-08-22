@@ -16,14 +16,17 @@ from sqlalchemy.ext.declarative import declarative_base
 import smtplib
 import requests
 import re
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
-MY_EMAIL = "iayushnegi09@gmail.com"
-PASSWORD = "*yLT8%2mi9xClsT"
+MY_EMAIL = os.environ['EMAIL']
+PASSWORD = os.environ['PASSWORD']
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ['SECRET']
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -37,7 +40,7 @@ gravatar = Gravatar(app,
                     base_url=None)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -121,7 +124,8 @@ def get_all_posts():
     quote = quote_data[0]["q"]
     author = quote_data[0]["a"]
     posts = BlogPost.query.all()
-    return render_template("index.html", all_posts=posts, current_user=current_user, now=datetime.utcnow(), q=quote,a=author)
+    return render_template("index.html", all_posts=posts, current_user=current_user, now=datetime.utcnow(), q=quote,
+                           a=author)
 
 
 @app.route('/register', methods=["GET", "POST"])
