@@ -94,7 +94,7 @@ class Comment(db.Model):
 
 
 # Create database
-db.create_all()
+# db.create_all()
 
 # login Manager
 
