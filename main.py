@@ -4,6 +4,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, abo
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import date, datetime
+import pytz
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
@@ -17,8 +18,8 @@ import smtplib
 import requests
 import re
 import os
-import psycopg2
 
+tz_NY = pytz.timezone('Asia/Kolkata')
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -222,7 +223,7 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"{date.today().strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now().strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
+                              date_time=f"{date.today(tz_NY).strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now(tz_NY).strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
