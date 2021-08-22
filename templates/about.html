@@ -1,0 +1,36 @@
+{% include "header.html" %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/mtufyy.jpg')}})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>About Me</h1>
+            <span class="subheading">This is what I do.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Hello, I'm Ayush a web developer. I ❤️chai,</p>
+        <img class="mountain" src="https://media.giphy.com/media/d8tkB4uvd7v2o95bfK/giphy.gif">
+        <p>I am from Dehradun, a small city situated near the Himalayan foothills.</p>
+        <p>One day an idea pop-up into my head about sharing some random things with people, so I ended up making this blog. Hope you'll like it.</p>
+        <p>I'm just an ordinary person, I usually spend my day sitting with my laptop, while having a cup of tea by my side. And taking my dogs for a walk in the evening.</p>
+        <p>But my best skill is actually in drinking tea. I get charged up by it in the morning.Ginger tea is my favourite!</p>
+        <p>If you too wanna make a blog post or in case you want a website. Then feel free to <a href="{{url_for('contact')}}">contact me.</a></p>
+        <p>Also you can checkout a small and interesting website, which I built few months ago. <a href="https://young-ravine-25884.herokuapp.com/" target="_blank"> Take me there.</a></p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  {% include "footer.html" %}
