@@ -17,6 +17,7 @@ import smtplib
 import requests
 import re
 import os
+import psycopg2
 
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
