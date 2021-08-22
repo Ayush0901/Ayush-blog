@@ -19,7 +19,7 @@ import requests
 import re
 import os
 
-tz_NY = pytz.timezone('Asia/Kolkata')
+tz_IN = pytz.timezone('Asia/Kolkata')
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -223,7 +223,7 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"{date.today(tz_NY).strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now(tz_NY).strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
+                              date_time=f"{date.today(tz_IN).strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now(tz_IN).strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
