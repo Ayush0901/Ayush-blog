@@ -18,7 +18,6 @@ import requests
 import re
 import os
 
-
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -39,7 +38,7 @@ gravatar = Gravatar(app,
                     base_url=None)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
