@@ -17,9 +17,8 @@ import smtplib
 import requests
 import re
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
