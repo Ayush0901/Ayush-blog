@@ -138,7 +138,7 @@ def register():
     if form.validate_on_submit():
         user_email = request.form.get("email")
         user_password = request.form.get("password")
-        user_name = request.form.get("name")
+        user_name = request.form.get("name").title()
         user_confirm_password = request.form.get("confirm_password")
         user = db.session.query(Users).filter_by(email=user_email).first()
 
@@ -227,7 +227,7 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"On{current_datetime.strftime(' %a, %b %d, %Y')} At {current_datetime.strptime(str(current_datetime.now().strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
+                              date_time=f"On{current_datetime.strftime(' %a, %b %d, %Y')} At {current_datetime.strftime('%I:%M% p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
