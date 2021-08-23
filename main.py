@@ -20,7 +20,7 @@ import requests
 
 import re
 import os
-# fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+fmt = '%Y-%m-%d %H:%M:%S %Z%z'
 eastern = timezone("ASIA/KOLKATA")
 in_datetime = eastern.localize(datetime.now())
 in_dt = in_datetime.astimezone(eastern)
