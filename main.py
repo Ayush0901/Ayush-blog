@@ -243,25 +243,25 @@ def about():
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    if request.method == "POST":
-        if current_user.is_anonymous:
-            flash("You need to login or register to contact.")
-            return redirect(url_for('login'))
-        name = request.form["username"]
-        email = request.form["email"]
-        phone_number = request.form["phone_number"]
-        message = request.form["message"]
-        if phone_number == "":
-            phone_number = "Not Provided"
-        msg = f"Name: {name}\n" \
-              f"Email: {email}\n" \
-              f"Phone: {phone_number}\n" \
-              f"Message: {message}"
-        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
-            connection.starttls()
-            connection.login(user=MY_EMAIL, password=PASSWORD)
-            connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg=f"Subject: New Message\n\n{msg}")
-        return render_template("contact.html", msg=True, current_user=current_user, now=datetime.utcnow())
+    # if request.method == "POST":
+    #     if current_user.is_anonymous:
+    #         flash("You need to login or register to contact.")
+    #         return redirect(url_for('login'))
+    #     name = request.form["username"]
+    #     email = request.form["email"]
+    #     phone_number = request.form["phone_number"]
+    #     message = request.form["message"]
+    #     if phone_number == "":
+    #         phone_number = "Not Provided"
+    #     msg = f"Name: {name}\n" \
+    #           f"Email: {email}\n" \
+    #           f"Phone: {phone_number}\n" \
+    #           f"Message: {message}"
+    #     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+    #         connection.starttls()
+    #         connection.login(user=MY_EMAIL, password=PASSWORD)
+    #         connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg=f"Subject: New Message\n\n{msg}")
+    #     return render_template("contact.html", msg=True, current_user=current_user, now=datetime.utcnow())
     return render_template("contact.html", current_user=current_user, msg=False, now=datetime.utcnow())
 
 
