@@ -23,7 +23,8 @@ import os
 fmt = '%Y-%m-%d %H:%M:%S %Z%z'
 eastern = timezone("ASIA/KOLKATA")
 in_datetime = eastern.localize(datetime.now())
-print(in_datetime.strftime(fmt))
+in_dt = in_datetime.astimezone(eastern)
+print(in_dt.strftime(fmt))
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -227,7 +228,7 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"On{in_datetime.strftime(' %a, %b %d, %Y')} At {in_datetime.strftime('%I:%M %p')} "
+                              date_time=f"On{in_dt.strftime(' %a, %b %d, %Y')} At {in_dt.strftime('%I:%M %p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
