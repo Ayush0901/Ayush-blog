@@ -304,7 +304,9 @@ def edit_post(post_id):
 
     return render_template("make-post.html", form=edit_form, current_user=current_user, is_edit=True,
                            now=datetime.utcnow())
-
+@app.route("/success")
+def thanks():
+    return render_template("thankyou.html")
 
 @app.route("/delete/<int:post_id>")
 @admin_required
