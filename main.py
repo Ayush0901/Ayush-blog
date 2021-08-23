@@ -3,7 +3,8 @@ from functools import wraps
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
-from datetime import date, datetime
+from datetime import datetime
+from pytz import timezone
 import pytz
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -16,11 +17,13 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 import smtplib
 import requests
-from dateutil.tz import tzlocal
 
 import re
 import os
-
+fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+eastern = timezone("ASIA/KOLKATA")
+current_datetime = eastern.localize(datetime.now())
+print(current_datetime.strftime(fmt))
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -224,7 +227,7 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"{date.today(tzlocal()).strftime('%B %d, %Y')} At {datetime.strptime(str(datetime.now(tzlocal()).strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
+                              date_time=f"On{current_datetime.strftime(' %a, %b %d, %Y')} At {current_datetime.strptime(str(current_datetime.now().strftime('%H:%M:%S')), '%H:%M:%S').strftime('%I:%M %p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
@@ -272,7 +275,7 @@ def add_new_post():
             body=form.body.data,
             img_url=form.img_url.data,
             author=current_user,
-            date=date.today().strftime("%B %d, %Y")
+            date=current_datetime.strftime("%B %d, %Y")
         )
         db.session.add(new_post)
         db.session.commit()
