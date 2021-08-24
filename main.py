@@ -20,11 +20,7 @@ import requests
 
 import re
 import os
-fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-eastern = timezone("ASIA/KOLKATA")
-in_datetime = eastern.localize(datetime.now())
-in_dt = in_datetime.astimezone(eastern)
-# print(in_dt.strftime(fmt))
+
 email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 MY_EMAIL = os.environ.get('EMAIL')
@@ -228,11 +224,13 @@ def show_post(post_id):
         new_comment = Comment(text=form.comment_text.data,
                               comment_author=current_user,
                               blog_post=requested_post,
-                              date_time=f"On{in_dt.strftime(' %a, %b %d, %Y')} At {in_dt.strftime('%I:%M %p')} "
+                              date_time=f"On{datetime.now().strftime(' %a, %b %d, %Y')} At {datetime.now().strftime('%I:%M %p')} "
                               )
         db.session.add(new_comment)
         db.session.commit()
-    return render_template("post.html", post=requested_post, current_user=current_user, form=form, gravatar=gravatar,
+
+    return render_template("post.html", post=requested_post, current_user=current_user, form=form,
+                           gravatar=gravatar,
                            now=datetime.utcnow())
 
 
@@ -261,22 +259,33 @@ def contact():
             connection.starttls()
             connection.login(user=MY_EMAIL, password=PASSWORD)
             connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg=f"Subject: New Message\n\n{msg}")
+        url = "https://ayush-blog.herokuapp.com/"
+        msg1 = f"Your message has been received successfully at {url}. We'll get back to you as soon as possible."
+        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+            connection.starttls()
+            connection.login(user=MY_EMAIL, password=PASSWORD)
+            connection.sendmail(from_addr=MY_EMAIL, to_addrs=email, msg=f"Subject: Thanks!\n\n{msg1}")
         return render_template("contact.html", msg=True, current_user=current_user, now=datetime.utcnow())
     return render_template("contact.html", current_user=current_user, msg=False, now=datetime.utcnow())
 
 
 @app.route("/new-post", methods=["GET", "POST"])
-@admin_required
 def add_new_post():
+    if current_user.is_anonymous:
+        flash("Login or register to create a post.")
+        return redirect(url_for("login"))
     form = CreatePostForm()
     if form.validate_on_submit():
+        if db.session.query(BlogPost).filter_by(title=form.title.data).first():
+            flash("A blog post with that title already exist. Please think about a different topic.")
+            return redirect(url_for("add_new_post"))
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
             body=form.body.data,
             img_url=form.img_url.data,
             author=current_user,
-            date=in_datetime.strftime("%B %d, %Y")
+            date=datetime.now().strftime("%B %d, %Y")
         )
         db.session.add(new_post)
         db.session.commit()

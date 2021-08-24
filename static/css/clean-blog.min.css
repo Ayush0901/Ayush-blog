@@ -4,6 +4,12 @@
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
  */
 
+.flashing{
+color:red;
+align: center;
+font-family: "Lora", cursive;
+}
+
  .quotes{
 font-family: 'Allison', cursive;
 font-size: 40px;
