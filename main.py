@@ -255,13 +255,13 @@ def contact():
               f"Email: {email}\n" \
               f"Phone: {phone_number}\n" \
               f"Message: {message}"
-        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+        with smtplib.SMTP("smtp.gmail.com", port=465) as connection:
             connection.starttls()
             connection.login(user=MY_EMAIL, password=PASSWORD)
             connection.sendmail(from_addr=MY_EMAIL, to_addrs="ayushnegi352@gmail.com", msg=f"Subject: New Message\n\n{msg}")
         url = "https://ayush-blog.herokuapp.com/"
         msg1 = f"Your message has been received successfully at {url}. We'll get back to you as soon as possible."
-        with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+        with smtplib.SMTP("smtp.gmail.com", port=465) as connection:
             connection.starttls()
             connection.login(user=MY_EMAIL, password=PASSWORD)
             connection.sendmail(from_addr=MY_EMAIL, to_addrs=email, msg=f"Subject: Thanks!\n\n{msg1}")
