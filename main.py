@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Flask, render_template, redirect, url_for, flash, request, abort
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import datetime
@@ -120,10 +120,11 @@ def admin_required(f):
 
 @app.route('/')
 def get_all_posts():
-    response = requests.get("https://zenquotes.io/api/random")
-    quote_data = response.json()
-    quote = quote_data[0]["q"]
-    author = quote_data[0]["a"]
+    # quote_data = response.json()
+    # quote = quote_data[0]["q"]
+    # author = quote_data[0]["a"]
+    quote="sdkfn dfn nfdn dsn nfdsnfdsn nf ndnfdsnf"
+    author="dfndj"
     posts = BlogPost.query.all()
     return render_template("index.html", all_posts=posts, current_user=current_user, now=datetime.utcnow(), q=quote,
                            a=author)
