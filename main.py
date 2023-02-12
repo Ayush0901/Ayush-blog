@@ -96,7 +96,7 @@ class Comment(db.Model):
 
 # Create database
 # db.create_all()
-#etereesffseetet
+#etereesffseetetrerewr
 login_manager = LoginManager()
 login_manager.init_app(app)
 
